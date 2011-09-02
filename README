@@ -1,0 +1,8 @@
+>> NOTES <<
+No instructions given, this is an undocumented hack.
+
+>> DOWNLOAD <<
+wget --no-check-certificate -O master.tar.gz http://github.com/maxexcloo/Server/tarball/master; tar zxvf *.gz; cd *Server*; sh server.sh
+
+>> CREDITS <<
+TorrentInfo: http://www.vrai.net/project.php?project=torrentinfo
