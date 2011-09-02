@@ -2,7 +2,7 @@
 No instructions given, this is an undocumented hack.
 
 >> DOWNLOAD <<
-wget --no-check-certificate -O master.tar.gz http://github.com/maxexcloo/Server/tarball/master; tar zxvf *.gz; cd *Server*; sh server.sh
+wget --no-check-certificate -O torrent-renamer.tar.gz http://github.com/maxexcloo/Server/tarball/master; tar zxvf torrent-renamer.tar.gz
 
 >> CREDITS <<
 TorrentInfo: http://www.vrai.net/project.php?project=torrentinfo
