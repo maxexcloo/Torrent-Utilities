@@ -18,5 +18,5 @@ sort -o list.album list.album
 sort -o list.year list.year
 
 # Print Unique List Values
-uniq -u list.album > list.album
-uniq -u list.year > list.year
+uniq -i -u list.album > list.album
+uniq -i -u list.year > list.year
