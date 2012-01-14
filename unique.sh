@@ -1,6 +1,9 @@
 #!/bin/bash
 cd $(dirname $0)
 
+# Remove Old Lists
+rm list.*
+
 # Loop Through Files
 for file in *.torrent; do
 	# Add Current File To List
