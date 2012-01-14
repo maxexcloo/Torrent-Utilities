@@ -12,10 +12,6 @@ for file in *.torrent; do
 	#echo "$file" | sed 's/ - [0-9]* (.*).torrent/.torrent/g' >> list
 done
 
-# Loop Through Files (Year)
-for file in *.torrent; do
-done
-
 # Sort Lists
 sort -f -o list list
 
