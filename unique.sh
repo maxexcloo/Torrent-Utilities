@@ -17,8 +17,8 @@ for file in *.torrent; do
 done
 
 # Sort Lists
-sort -o list.album list.album
-sort -o list.year list.year
+sort -f -o list.album list.album
+sort -f -o list.year list.year
 
 # Print Unique List Values
 uniq -i -u list.album > list.album
