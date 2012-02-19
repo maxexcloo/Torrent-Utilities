@@ -17,3 +17,6 @@ sort -f -o list list
 
 # Print Unique List Values
 uniq -i -u list
+
+# Remove Old Lists
+rm list
