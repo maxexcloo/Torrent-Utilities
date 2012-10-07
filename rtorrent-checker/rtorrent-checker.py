@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 import xmlrpclib, sys, os, signal, argparse, shutil
 import xmlrpc2scgi as xs
-rtorrent_host = "scgi:///home/main/.config/rtorrent-music-single/socket"
+rtorrent_host = "scgi://"
 
 rtc = xs.RTorrentXMLRPCClient(rtorrent_host)
 parser = argparse.ArgumentParser(description="Check for files that are on your drive, but aren't present in rtorrent", add_help=True)
