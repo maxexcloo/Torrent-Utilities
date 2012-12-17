@@ -9,7 +9,7 @@ action = parser.add_mutually_exclusive_group(required=False)
 parser.add_argument('path', action="store",  help="Directory you want to check")
 parser.add_argument('-r', action="store_true", dest="refresh", default=False, help="Refresh the list")
 action.add_argument('-d', action="store_true", dest="delete", default=False, help="Delete the files (asks again)")
-action.add_argument('-D', action="store_true", dest="delete_all", default=False, help="Delete the files (Doesn't ask again) USE CAREFULLY!!")
+action.add_argument('-D', action="store_true", dest="delete_all", default=False, help="Delete the files (doesn't ask again)")
 args =  parser.parse_args()
 
 def signal_handler(signal, frame):
