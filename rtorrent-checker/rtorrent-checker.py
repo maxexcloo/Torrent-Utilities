@@ -1,21 +1,21 @@
-#!/usr/bin/env python2
-import xmlrpclib, sys, os, signal, argparse, shutil
+#!/usr/bin/python
+import argparse, os, shutil, signal, sys, xmlrpclib
 import xmlrpc2scgi as xs
-rtorrent_host = "scgi://"
-
-rtc = xs.RTorrentXMLRPCClient(rtorrent_host)
-parser = argparse.ArgumentParser(description="Check for files that are on your drive, but aren't present in rtorrent", add_help=True)
-action = parser.add_mutually_exclusive_group(required=False)
-parser.add_argument('path', action="store",  help="Directory you want to check")
-parser.add_argument('-r', action="store_true", dest="refresh", default=False, help="Refresh the list")
-action.add_argument('-d', action="store_true", dest="delete", default=False, help="Delete the files (asks again)")
-action.add_argument('-D', action="store_true", dest="delete_all", default=False, help="Delete the files (doesn't ask again)")
-args =  parser.parse_args()
 
 def signal_handler(signal, frame):
-	print "\n\naborting...\n"
+	print "\n\nAborting...\n"
 	sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
+
+parser = argparse.ArgumentParser(description="Check for files that are on your drive, but aren't present in rTorrent", add_help=True)
+action = parser.add_mutually_exclusive_group(required=False)
+parser.add_argument('path', action="store", help="Directory you want to check")
+parser.add_argument('socket', action="store", help="Socket of rTorrent instance you want to check")
+action.add_argument('-d', action="store_true", dest="delete", default=False, help="Delete the files")
+args = parser.parse_args()
+
+filename = "checker.list"
+rtc = xs.RTorrentXMLRPCClient("scgi://"+args.socket)
 
 def find(string, list):
 	for item in list:
@@ -24,40 +24,32 @@ def find(string, list):
 	return False
 
 def refresher():
-	print "Refreshing list. This may take some time depending on the number of torrents..."
 	torrents = rtc.download_list('')
 	numtorr = len(torrents)
-	f = open(filename, "w")
+	file = open(filename, "w")
 	counter = 0
 	for torrent in torrents:
 		message = rtc.d.get_directory(torrent)
-		f.write(unicode(message).encode("utf-8")+"\n")
+		file.write(unicode(message).encode("utf-8")+"\n")
 		counter = counter + 1
 		sys.stdout.write("\r"+str(counter)+" / "+str(numtorr)+" ("+str(int(round((100.0*counter)/numtorr)))+"%)")
 		sys.stdout.flush()
-	f.close()
+	file.close()
 	sys.stdout.write("\n")
-	print "Refreshed list!"
-path = args.path
+
+refresher()
 torrentlist = []
-filename = "checker.list"
 
-if args.refresh  or not os.path.exists("checker.list"):
-	refresher()
-
-f = open(filename, "r")
-for line in f:
+file = open(filename, "r")
+for line in file:
 	torrentlist.append(line[:-1])
-f.close()
+file.close()
 
-for dirname in os.listdir(path):
-	thepath = os.path.join(path, dirname)
-	if os.path.isdir(thepath) == True:
-		if find(thepath, torrentlist) == False:
-			print "Found: "+os.path.join(path, dirname)
+for dirname in os.listdir(args.path):
+	path = os.path.join(args.path, dirname)
+	if os.path.isdir(path) == True:
+		if find(path, torrentlist) == False:
+			print "Found: "+os.path.join(args.path, dirname)
 			if args.delete:
-				reply = raw_input("Delete directory "+dirname+"? [y/[n]] ")
-				if reply=="y" or reply == "Y":
-					shutil.rmtree(thepath,True)
-			elif args.delete_all:
-				shutil.rmtree(thepath,True)
+				shutil.rmtree(path,True)
+os.remove(filename)
