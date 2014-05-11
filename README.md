@@ -1,4 +1,5 @@
-Notes
-=====
+**Description**  
+This repository contains a collection of scripts for torrent management.
 
-This repository contains a collection of scripts I've worked on for torrent management. Many are likely to be outdated or broken.
+**Warning**  
+This repository is unsupported and code may be outdated or broken.
